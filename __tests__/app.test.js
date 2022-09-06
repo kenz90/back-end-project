@@ -6,12 +6,12 @@ const request = require("supertest");
 
 beforeEach(() => seed(testData));
 afterAll(() => {
-  db.end();
+  return db.end();
 });
 
 describe("/api/categories", () => {
   describe("GET /api/categories", () => {
-    test("status: 200, should respond with all treasures", () => {
+    test("status: 200, should respond with all categories", () => {
       return request(app)
         .get("/api/categories")
         .expect(200)
@@ -25,6 +25,16 @@ describe("/api/categories", () => {
               })
             );
           });
+        });
+    });
+  });
+  describe("GET /api/categories ERRORS", () => {
+    test("status: 404, should respond with error message not found when given incorrect route", () => {
+      return request(app)
+        .get("/api/caaateoriesus")
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).toBe("not found");
         });
     });
   });

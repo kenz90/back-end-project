@@ -44,13 +44,11 @@ describe("/api/reviews", () => {
   describe("GET /api/reviews/:review_id", () => {
     it("status: 200, response with an array of review objects with its properties  ", () => {
       const review_id = 7;
-      
+
       return request(app)
         .get(`/api/reviews/${review_id}`)
         .expect(200)
         .then((res) => {
-          expect(res.body.review).toBeInstanceOf(Object);
-          // expect(res.body.review).toHaveLength(1);
           expect(res.body.review).toEqual(
             expect.objectContaining({
               review_id: 7,
@@ -68,33 +66,26 @@ describe("/api/reviews", () => {
           );
         });
     });
-  describe("GET /api/reviews/:review_id ERRORS", () => {
-    it("status:400, should respond with error message bad request when given invalid data type", () => {
-      return request(app)
-      .get("/api/reviews/:review_id")
-      .expect(400)
-      .then((res) => {
-        expect(res.body.msg).toBe("bad request");
-        
-      })
-
-    })
-    it('status:404, should respond with error with error message review not found ', () => {
-      const reviewid = 983;
-      return request(app)
-      .get(`/api/reviews/${reviewid}`)
-      .expect(404)
-      .then((res) => {
-        expect(res.body.msg).toBe(
-          `review with id: ${reviewid} does not exist`
-        );
-        
-      })
-      
+    describe("GET /api/reviews/:review_id ERRORS", () => {
+      it("status:400, should respond with error message bad request when given invalid data type", () => {
+        return request(app)
+          .get("/api/reviews/:review_id")
+          .expect(400)
+          .then((res) => {
+            expect(res.body.msg).toBe("bad request");
+          });
+      });
+      it("status:404, should respond with error with error message review not found ", () => {
+        const reviewid = 983;
+        return request(app)
+          .get(`/api/reviews/${reviewid}`)
+          .expect(404)
+          .then((res) => {
+            expect(res.body.msg).toBe(
+              `review with id: ${reviewid} does not exist`
+            );
+          });
+      });
     });
-
-  })
-      
-    
   });
 });

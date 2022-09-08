@@ -69,7 +69,7 @@ describe("/api/reviews", () => {
     describe("GET /api/reviews/:review_id ERRORS", () => {
       it("status:400, should respond with error message bad request when given invalid data type", () => {
         return request(app)
-          .get("/api/reviews/:review_id")
+          .get("/api/reviews/unknownID")
           .expect(400)
           .then((res) => {
             expect(res.body.msg).toBe("bad request");

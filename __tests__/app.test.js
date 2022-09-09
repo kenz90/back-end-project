@@ -88,4 +88,25 @@ describe("/api/reviews", () => {
       });
     });
   });
+  describe("GET /api/users", () => {
+    test("status: 200, should respond with all users", () => {
+      return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then((result) => {
+          expect(result.body.users).toHaveLength(4);
+          result.body.users.forEach((user) => {
+            expect(user).toEqual(
+              expect.objectContaining({
+               
+                username: expect.any(String),
+                name: expect.any(String),
+                avatar_url:expect.any(String)
+              })
+ 
+            );
+          });
+        });
+    });
+  });
 });
